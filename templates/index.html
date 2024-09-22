@@ -1,54 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preferencias de Usuario</title>
+    <title>Tarea Servidor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: "{{ font_type }}";
-            color: {{ font_color }};
+            background-color: #eee;
+            font-weight: bold;
+            color: {{font_color}};
+            font-family: {{ font_type }};
+            
         }
 
+        button:hover{
+            box-shadow: 1px 1px 20px gray;
+            transition: .5s;
+        }
     </style>
 </head>
-<body>
-    <h1>Bienvenido</h1>
 
-    <section>
-        <form action="/set_preferences" method="POST">
-            <label for="font_type">Selecciona el tipo de letra:</label>
-            <select name="font_type" id="font_type">
-                <option value="Arial" {% if font_type == 'Arial' %}selected{% endif %}>Arial</option>
-                <option value="Courier" {% if font_type == 'Courier' %}selected{% endif %}>Courier</option>
-                <option value="Verdana" {% if font_type == 'Verdana' %}selected{% endif %}>Verdana</option>
-            </select>
-    
-            <label for="font_color">Selecciona el color de la fuente:</label>
-            <input type="color" name="font_color" id="font_color" value="{{ font_color }}">
-    
-            <button type="submit">Guardar preferencias</button>
+<body class="flex flex-col justify-center gap-y-10 items-center min-h-screen min-w-screen">
+    <h1 class="text-4xl">Preferencias de Usuario</h1>
+
+    <section class="flex flex-row justify-between h-[400px] w-2/3 gap-14">
+        
+        <form action="/set_preferences" method="POST" 
+            class="flex flex-col justify-evenly w-1/2 px-6 py-10 bg-[#e1e1e1] shadow-2xl rounded-3xl border border-gray-300"
+        >
+            <section>
+                <label for="font_type" class="text-2xl">
+                    Selecciona el tipo de letra:
+                </label><br>
+                <select name="font_type" id="font_type">
+                    <option value="Arial" {% if font_type=='Arial' %}selected{% endif %}>Arial</option>
+                    <option value="Courier" {% if font_type=='Courier' %}selected{% endif %}>Courier</option>
+                    <option value="Verdana" {% if font_type=='Verdana' %}selected{% endif %}>Verdana</option>
+                </select>
+            </section>
+
+            <section>
+                <label for="font_color" class="text-2xl">
+                    Selecciona el color de la fuente:
+                </label><br>
+                <input type="color" name="font_color" id="font_color" value="{{ font_color }}">
+            </section>
+
+            <button type="submit" class="rounded-2xl py-3 w-3/4 text-xl border border-gray-400">
+                Guardar preferencias
+            </button>
         </form>
-    </section>
-    <section>
-        <h2>Enlaces disponibles:</h2>
-    <ul>
-        {% for link in links %}
-            <li><a href="{{ url_for('visit_link', link=link) }}" target="_blank">{{ link }}</a></li>
-        {% endfor %}
-    </ul>
+        
 
-    {% if visited_links %}
-        <h2>Enlaces visitados:</h2>
-        <ul>
-            {% for link in visited_links %}
-                <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    </section>
-    
+        <section class="flex flex-col justify-between">   
+            <section class="w-full px-6 py-10 bg-[#e1e1e1] shadow-2xl rounded-3xl border border-gray-300" >
+                <h2 class="text-2xl">Enlaces disponibles:</h2>
+                <ul>
+                    {% for link in links %}
+                    <li><a href="{{ url_for('visit_link', link=link) }}" target="_blank">{{ link }}</a></li>
+                    {% endfor %}
+                </ul>
 
-    
+            </section>
+
+            <section class="w-full px-6 py-10 bg-[#e1e1e1] shadow-2xl rounded-3xl border border-gray-300" >
+                <h2 class="text-2xl">Enlaces visitados:</h2>
+                {% if visited_links %}
+                <ul>
+                    {% for link in visited_links %}
+                    <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </section>
+        </section>
+    </section>
 </body>
+
 </html>

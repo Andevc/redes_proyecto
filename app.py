@@ -14,7 +14,7 @@ def index():
     visited_links = visited_links.split(',') if visited_links else []
 
     # Links disponibles
-    links = ['https://google.com', 'https://github.com', 'https://flask.palletsprojects.com']
+    links = ['https://google.com', 'https://github.com', 'https://ssainformatica.umsa.bo/', 'https://cvinformatica.umsa.bo/']
 
     return render_template('index.html', font_type=font_type, font_color=font_color, visited_links=visited_links, links=links)
 
