@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # Obtener preferencias de cookies
+    
     font_type = request.cookies.get('font_type', 'Arial')
     font_color = request.cookies.get('font_color', 'black')
     visited_links = request.cookies.get('visited_links', '')
@@ -18,6 +18,7 @@ def index():
 
     return render_template('index.html', font_type=font_type, font_color=font_color, visited_links=visited_links, links=links)
 
+
 @app.route('/set_preferences', methods=['POST'])
 def set_preferences():
     # Obtener preferencias del usuario
@@ -26,7 +27,9 @@ def set_preferences():
 
     # Crear respuesta y guardar las cookies
     response = make_response(redirect(url_for('index')))
-    expiration = datetime.now() + timedelta(days=30)
+    expiration = datetime.now() + timedelta(days=1)
+    
+
     response.set_cookie('font_type', font_type, expires=expiration)
     response.set_cookie('font_color', font_color, expires=expiration)
     
